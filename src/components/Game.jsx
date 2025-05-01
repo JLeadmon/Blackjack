@@ -8,6 +8,7 @@ const Game = () => {
     const [gameResult, setGameResult] = useState('');
     const [dealerDrawing, setDealerDrawing] = useState(false);
 
+    //Here is were we put together the deck and declare what exactly is in the deck
     const initializeDeck = () => {
         const suits = ['hearts', 'diamonds', 'clubs', 'spades'];
         const values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
@@ -41,6 +42,7 @@ const Game = () => {
     //     });
     // };
 
+    //This is where we declare a const that calls everything required to start the game
     const startGame = () => {
         setPlayerHand([]);
         setDealerHand([]);
@@ -64,6 +66,9 @@ const Game = () => {
     //     }
     // }, [deck]);
 
+    // This is where we calculate what exactly the total hand value is
+    // and what the value of each letter is in the deck. We also make the different loops for the 'A' card
+    // to change its value.
     const calculateHandValue = (hand) => {
         let value = 0;
         let aceCount = 0;
@@ -89,6 +94,9 @@ const Game = () => {
         return value;
     };
 
+    // this is where we declare when and how the player draws their cards. We also set the function
+    // of if the deck is empty the game is over. We also declare the function of if the player hand value
+    // is over 21 then the player loses.
     const playerHit = () => {
         if (!playerTurn || deck.length === 0) return;
 
@@ -112,6 +120,8 @@ const Game = () => {
         }
     }
 
+    // this is where we declared that if the player wants to end there turn we stand.
+    // Which allows the dealer to start their turn.
     const playerStand = () => {
         setPlayerTurn(false);
         setDealerDrawing(true);
@@ -133,6 +143,10 @@ const Game = () => {
     //       determineWinner();
     //   };
 
+    // This is where we declare the dealers turn. We loop if the dealer has less than 17 cards then 
+    // the dealer can draw. checks whether deck is empty. Checks whether the dealers hand after drawing
+    // is over the 21 and if it is, dealer loses. This is also where we delcare the winner between
+    // dealer and player.
     useEffect(() => {
         if (dealerDrawing) {
             const dealerValue = calculateHandValue(dealerHand);
@@ -167,6 +181,9 @@ const Game = () => {
         }
     }, [dealerHand, dealerDrawing, deck])
 
+    // This is the code of how the winner is declared between player and dealer. Code checks whether
+    // dealer hand is over 21 or if player hand is higher than dealer hand or if the vlaue between them
+    // is the same.
     const determineWinner = () => {
         const playerHandValue = calculateHandValue(playerHand);
         const dealerHandValue = calculateHandValue(dealerHand);
@@ -182,6 +199,8 @@ const Game = () => {
         }
     };
 
+    // This is where we coded the display of each card and the symbols on the cards. We also code color here.
+    // We also coded the display of what the value looks like in the game.
     const displayCard = (card) => {
         if (!card) return null;
 
